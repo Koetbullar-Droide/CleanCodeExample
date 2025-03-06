@@ -1,17 +1,15 @@
 package org.example;
 
-// Singleton Design Pattern - Anwendung für DRY-Prinzip
-// Das Singleton-Pattern stellt sicher, dass nur eine einzige Instanz einer Klasse existiert.
-// Es hilft dabei, redundante Objekterstellungen zu vermeiden und eine zentrale Steuerung zu ermöglichen.
-
-// Singleton-Klasse zur Verwaltung einer gemeinsamen Datenbankverbindung oder Konfiguration
 class ConfigurationManager {
-    // Private statische Instanz der Klasse (wird nur einmal erstellt)
     private static ConfigurationManager instance;
+    private String configData;
+    private boolean isDevelopmentMode;
 
-    // Private Konstruktor, um direkte Instanziierung zu verhindern
+    // Privater Konstruktor, um direkte Instanziierung zu verhindern
     private ConfigurationManager() {
         System.out.println("Konfigurationsmanager initialisiert.");
+        configData = "Standardkonfiguration";
+        isDevelopmentMode = true; // Standardmäßig Entwicklungsmodus
     }
 
     // Öffentliche Methode zur Rückgabe der einzigen Instanz
@@ -22,12 +20,25 @@ class ConfigurationManager {
         return instance;
     }
 
-    // Beispielmethode, um eine Konfiguration zu laden
+    // Beispielmethode zum Laden einer Konfiguration
     public void loadConfiguration() {
-        System.out.println("Lade Konfiguration...");
+        System.out.println("Lade Konfiguration: " + configData);
+        if (isDevelopmentMode) {
+            System.out.println("Achtung: Entwicklungsmodus ist AKTIV.");
+        } else {
+            System.out.println("Läuft im Produktivmodus.");
+        }
+    }
+
+    // Methode zur Änderung der Konfiguration
+    public void setConfigData(String newConfig) {
+        configData = newConfig;
+        System.out.println("Neue Konfiguration gesetzt: " + configData);
+    }
+
+    // Methode zum Umschalten zwischen Entwicklungs- und Produktionsmodus
+    public void switchMode(boolean devMode) {
+        isDevelopmentMode = devMode;
+        System.out.println("Modus gewechselt: " + (isDevelopmentMode ? "Entwicklung" : "Produktion"));
     }
 }
-
-// Beispielklasse zur Demonstration der Nutzung des Singleton-Patterns in der Main Class
-
-
